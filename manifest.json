@@ -1,0 +1,45 @@
+{
+	"name": "Variable Screenshots",
+	"description": "Takes variable resolution screenshots",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "background.js"
+	},
+	"permissions": ["activeTab", "downloads", "debugger", "scripting", "tabs", "unlimitedStorage", "storage"],
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "/images/icon_off_16.png",
+			"32": "/images/icon_off_32.png",
+			"48": "/images/icon_off_48.png",
+			"128": "/images/icon_off_128.png"
+		}
+	},
+	"icons": {
+		"16": "/images/icon_on_16.png",
+		"32": "/images/icon_on_32.png",
+		"48": "/images/icon_on_48.png",
+		"128": "/images/icon_on_128.png"
+	},
+	"commands": {
+		"attach_debugger": {
+			"suggested_key": {
+				"default": "Alt+Shift+D"
+			},
+			"description": "Attaches a debugger to this tab"
+		},
+		"screenshot_single": {
+			"suggested_key": {
+				"default": "Alt+S"
+			},
+			"description": "Takes a single screenshot and downloads it"
+		},
+		"screenshot_batch": {
+			"suggested_key": {
+				"default": "Alt+Shift+S"
+			},
+			"description": "Takes a screenshot and saves it to a zip file for download"
+		}
+	}
+}
