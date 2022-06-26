@@ -9,6 +9,9 @@
 
 ## Usage
 
+### Download
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/variable-screenshots/lolkajaijngnaehgjhaomacmdiddoell)
+
 ### Hotkeys
 - Alt+Shift+D: Attach debugger
 - Alt+S: Take single screenshot
