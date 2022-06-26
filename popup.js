@@ -13,7 +13,7 @@ let countLabel = document.getElementById("count");
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
 	let tab = tabs[0];
-	if(tab.url.indexOf('chrome://') != 0)
+	if(/https?|file/.test(tab.url))
 	{
 		chrome.scripting.executeScript({ target: {tabId: tab.id}, files: ['content.js'] }, result => {
 			chrome.tabs.sendMessage(tab.id, {type: 'query', query: 'dimension'}, (res) => {
@@ -42,13 +42,9 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
 		screenshotBatchBtn.disabled = true;
 	}
 	//Get file count
-	chrome.runtime.sendMessage({type: 'query', query: 'count'}, async (res) => {
-		if (chrome.runtime.lastError) {
-			console.log('runtime.lastError', tab.id, chrome.runtime.lastError.message);
-			return;
-		}
-		setFileCount(res);
-	});
+	getCount().then(count => {
+		setFileCount(count);
+	})
 });
 
 function getFileCount()
@@ -117,10 +113,6 @@ clearEmulation.addEventListener("click", async () => {
 	);
 });
 
-function toName(date)
-{
-	return `${date.getFullYear()}_${`0${date.getMonth()+1}`.slice(-2)}_${`0${date.getDate()}`.slice(-2)}_${`0${date.getHours()}`.slice(-2)}_${`0${date.getMinutes()}`.slice(-2)}_${`0${date.getSeconds()}`.slice(-2)}`;
-}
 screenshotBtn.addEventListener("click", async () => {
 	let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 	chrome.runtime.sendMessage({type: 'command', command: 'screenshot_single', tabId: tab.id});
@@ -139,5 +131,5 @@ clearBatchBtn.addEventListener("click", async () => {
 });
 
 dlBatchBtn.addEventListener("click", async () => {
-	chrome.runtime.sendMessage({type: 'command', command: 'download_zip', name: toName(new Date())});
+	chrome.runtime.sendMessage({type: 'command', command: 'download_zip'});
 });
